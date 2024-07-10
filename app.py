@@ -6,7 +6,7 @@ import tensorflow as tf
 app = Flask(__name__)
 
 def load_model():
-    model_path = r'C:\Users\MirzaSafiullaBaig\Desktop\code\tomato-disease\model\my_model.keras'  # Update with your model path
+    model_path = r'C:\Users\MirzaSafiullaBaig\Desktop\code\tomato-disease\tomato_leaf_disease\my_model.keras'  
     model = tf.keras.models.load_model(model_path)
     return model
 model = load_model()
