@@ -59,7 +59,6 @@ Then open http://localhost:5000 in your browser.
 ## Sample Prediction
 
 You can test the model by uploading a tomato leaf image.  
-(Screenshot/preview can be added here.)
 
 ## Model Training
 
