@@ -6,8 +6,8 @@ import tensorflow as tf
 app = Flask(__name__)
 
 def load_model():
-    model_path = r'C:\Users\MirzaSafiullaBaig\Desktop\code\tomato-disease\tomato_leaf_disease\my_model.keras'  
-    model = tf.keras.models.load_model(model_path)
+    model_path = r'C:\Users\USER\Desktop\code\leaf_disease\tomato-leaf-disease\model.h5'  
+    model = tf.keras.models.load_model(model_path, compile=False)
     return model
 model = load_model()
 

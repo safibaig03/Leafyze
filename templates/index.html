@@ -75,16 +75,37 @@
         <h1>Leaf Disease Classifier</h1>
         <div class="upload-form">
             <form id="uploadForm" action="/predict" method="post" enctype="multipart/form-data">
-                <input type="file" name="file" accept=".jpg, .png" required>
+                <input type="file" id="fileInput" name="file" accept=".jpg, .png" required>
                 <input type="submit" value="Predict">
             </form>
         </div>
         <div id="result"></div>
     </div>
-    
+
     <script>
-        document.getElementById('uploadForm').addEventListener('submit', async function(e) {
-            e.preventDefault();  
+        const fileInput = document.getElementById('fileInput');
+        const resultDiv = document.getElementById('result');
+
+        fileInput.addEventListener('change', function () {
+            resultDiv.innerHTML = ''; // Clear previous result
+
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const uploadedImage = document.createElement('img');
+                    uploadedImage.src = e.target.result;
+                    uploadedImage.alt = 'Preview Image';
+                    uploadedImage.style.maxWidth = '300px';
+                    uploadedImage.style.borderRadius = '8px';
+                    uploadedImage.style.boxShadow = '0 0 5px rgba(0,0,0,0.2)';
+                    resultDiv.appendChild(uploadedImage);
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        document.getElementById('uploadForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
 
             let formData = new FormData(this);
             try {
@@ -97,19 +118,7 @@
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
-                let result = await response.json();  
-
-
-                document.getElementById('result').innerHTML = '';
-
-
-                let uploadedImage = document.createElement('img');
-                uploadedImage.src = URL.createObjectURL(this.file.files[0]);
-                uploadedImage.alt = 'Uploaded Image';
-                uploadedImage.style.maxWidth = '300px';  
-                uploadedImage.style.borderRadius = '8px';
-                uploadedImage.style.boxShadow = '0 0 5px rgba(0,0,0,0.2)';
-                document.getElementById('result').appendChild(uploadedImage);
+                let result = await response.json();
 
                 // Display prediction result
                 let predictionText = document.createElement('div');
@@ -118,13 +127,12 @@
                     <h3>Prediction: ${result.predicted_class}</h3>
                     <p>Confidence: ${result.confidence.toFixed(2)}</p>
                 `;
-                document.getElementById('result').appendChild(predictionText);
+                resultDiv.appendChild(predictionText);
             } catch (error) {
                 console.error('Error:', error);
-                document.getElementById('result').innerHTML = `<p>Error: ${error.message}</p>`;
+                resultDiv.innerHTML = `<p>Error: ${error.message}</p>`;
             }
         });
     </script>
-    
 </body>
 </html>
