@@ -2,11 +2,13 @@ from flask import Flask, request, jsonify, render_template
 from PIL import Image
 import numpy as np
 import tensorflow as tf
+import os
+
 
 app = Flask(__name__)
 
 def load_model():
-    model_path = r'C:\Users\USER\Desktop\code\leaf_disease\tomato-leaf-disease\model.h5'  
+    model_path = os.path.join(os.path.dirname(__file__), 'model.h5')
     model = tf.keras.models.load_model(model_path, compile=False)
     return model
 model = load_model()
