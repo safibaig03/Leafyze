@@ -1,13 +1,3 @@
----
-title: Leafyze
-emoji: 🍃
-colorFrom: green
-colorTo: blue
-sdk: streamlit
-app_file: app.py
-pinned: false
----
-
 # Tomato Leaf Disease Prediction
 
 A web application that uses a deep learning model to detect diseases in tomato leaves. It classifies leaf images into Late Blight, Early Blight, or Healthy, and aims to assist farmers and gardeners in identifying plant diseases quickly and accurately.
